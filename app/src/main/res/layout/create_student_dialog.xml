@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="200dp"
+    android:padding="20dp"
+
+    >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Student Name"
+        />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/studentId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Student ID"
+        android:layout_below="@id/name"
+        android:layout_marginTop="10dp"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/done"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="done"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="cancel"
+        />
+
+</RelativeLayout>

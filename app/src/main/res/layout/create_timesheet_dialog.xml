@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="320dp"
+    android:padding="20dp"
+    >
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Class"
+        android:textSize="20sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/class_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/text1"
+        android:layout_marginBottom="50dp"
+        />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textSize="20sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@id/text1"
+        />
+
+    <Button
+        android:id="@+id/date_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/text2"
+        android:layout_below="@id/class_spinner"
+        android:text="Choose Date"
+        android:layout_marginBottom="35dp"
+        />
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:textSize="20sp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/text2"
+        />
+
+    <Button
+        android:id="@+id/time_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/text2"
+        android:layout_below="@id/date_button"
+        android:text="Choose time"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/done"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="done"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="cancel"
+        />
+
+
+
+</RelativeLayout>

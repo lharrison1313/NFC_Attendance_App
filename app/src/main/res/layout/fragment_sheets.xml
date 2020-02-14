@@ -2,13 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Attendance Sheets"
         android:textSize="30sp"
         android:layout_centerInParent="true"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10sp"
+        android:layout_marginRight="20sp"
         />
 
 </RelativeLayout>
