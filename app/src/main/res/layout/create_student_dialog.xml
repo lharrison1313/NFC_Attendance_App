@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"
         />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/done"
+        android:id="@+id/doneStudents"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -30,7 +30,7 @@
         android:text="done"
         />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancel"
+        android:id="@+id/cancelStudents"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
