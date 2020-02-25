@@ -19,6 +19,9 @@
         <activity android:name=".AddStudentsActivity">
 
         </activity>
+        <activity android:name=".AddClassActivity">
+
+        </activity>
     </application>
 
 </manifest>
