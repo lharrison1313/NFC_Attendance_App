@@ -24,6 +24,7 @@ public class ClasssesFragement extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //create the button object
         FloatingActionButton fab = getActivity().findViewById(R.id.floatingActionButtonClasses);
         fab.setOnClickListener(this);
     }
