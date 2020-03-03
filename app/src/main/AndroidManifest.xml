@@ -22,6 +22,9 @@
         <activity android:name=".AddClassActivity">
 
         </activity>
+        <activity android:name=".AddSheetActivity">
+
+        </activity>
     </application>
 
 </manifest>
