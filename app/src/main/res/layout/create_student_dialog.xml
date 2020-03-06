@@ -6,19 +6,19 @@
     >
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/name"
+        android:id="@+id/studentNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Student Name"
         />
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/studentId"
+        android:id="@+id/studentIdInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Student ID"
-        android:layout_below="@id/name"
+        android:layout_below="@id/studentNameInput"
         android:layout_marginTop="10dp"
         />
     <androidx.appcompat.widget.AppCompatButton

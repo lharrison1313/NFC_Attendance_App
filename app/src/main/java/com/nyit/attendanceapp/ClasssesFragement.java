@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ClasssesFragement extends Fragment implements View.OnClickListener {
+public class ClasssesFragement extends Fragment  {
 
+    FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -24,14 +25,16 @@ public class ClasssesFragement extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //create the button object
-        FloatingActionButton fab = getActivity().findViewById(R.id.floatingActionButtonClasses);
-        fab.setOnClickListener(this);
+
+        //creating add class button
+        fab = getActivity().findViewById(R.id.floatingActionButtonClasses);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),AddClassActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getActivity(),AddClassActivity.class);
-        getActivity().startActivity(intent);
-    }
 }
