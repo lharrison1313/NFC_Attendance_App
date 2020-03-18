@@ -20,32 +20,34 @@ public class StudentsFragement extends Fragment {
     FloatingActionButton fab;
     ListView lv;
     ArrayList<Student> students;
+    AttendanceDbHelper db;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //Adding students to list view
-        students = new ArrayList<>();
-        students.add(new Student("Luke","1204951"));
-        students.add(new Student("Jim","1205141"));
-        students.add(new Student("Joe","1203273"));
-        students.add(new Student("Eric","1265436"));
-        students.add(new Student("Bob","1255268"));
-        students.add(new Student("Stefan","1266905"));
-        students.add(new Student("Maria","1203321"));
-
-
+        db = new AttendanceDbHelper(getContext());
+        students = db.retrieveAllStudents();
         return inflater.inflate(R.layout.fragment_students,container,false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("resumed");
+        students = db.retrieveAllStudents();
+        updatStudentList();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //creating student list
-        lv = getActivity().findViewById(R.id.studentList);
-        StudentListAdapter adapter = new StudentListAdapter(getActivity(),students);
-        lv.setAdapter(adapter);
+        updatStudentList();
 
         //creating add student button
         fab = getActivity().findViewById(R.id.floatingActionButtonStudents);
@@ -56,6 +58,15 @@ public class StudentsFragement extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+    }
+
+
+    public void updatStudentList(){
+        if(students != null && students.size() != 0 ) {
+            lv = getActivity().findViewById(R.id.studentList);
+            StudentListAdapter adapter = new StudentListAdapter(getActivity(), students);
+            lv.setAdapter(adapter);
+        }
     }
 
 }
