@@ -3,7 +3,8 @@
     android:layout_width="match_parent" android:layout_height="wrap_content">
     <TextView
         android:id="@+id/studentName"
-        android:padding="10dp"
+        android:padding="5px"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Student Name"
@@ -18,6 +19,37 @@
         android:text="ID"
         android:textSize="20dp"
         android:layout_below="@+id/studentName"
+        />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/editStudent"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_edit_black_24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="200dp"
+
+
+        />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/deleteStudent"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:layout_toRightOf="@id/editStudent"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="5dp"
+
+        />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/writeNFC"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_nfc_black_24dp"
+        android:layout_toRightOf="@id/deleteStudent"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="5dp"
+
         />
 
 

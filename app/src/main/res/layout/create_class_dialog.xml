@@ -7,14 +7,14 @@
         android:id="@+id/name_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Class Name"
+        android:hint="Class Name"
         android:layout_marginVertical="5dp"
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/section_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Section"
+        android:hint="Section"
         android:layout_below="@id/name_field"
         android:layout_marginVertical="5dp"
         />
@@ -22,7 +22,7 @@
         android:id="@+id/room_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Room Number"
+        android:hint="Room Number"
         android:layout_below="@id/section_field"
         android:layout_marginVertical="5dp"
 

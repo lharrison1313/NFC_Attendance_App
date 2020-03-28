@@ -1,14 +1,19 @@
 package com.nyit.attendanceapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -24,15 +29,18 @@ public class AddStudentsActivity extends Activity {
     private PendingIntent pendingIntent;
     private TagReaderWriter tagReaderWriter;
     private TextInputEditText nameField;
-    TextInputEditText idField;
+    private TextInputEditText idField;
+    private AlertDialog nfcDialog;
+    private AlertDialog writeCompleteDialog;
+    private boolean writeToNFC;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_student_dialog);
 
-        //creating database helper
         db = new AttendanceDbHelper(this);
+        writeToNFC = false;
 
         //linking textfield objects
         nameField = findViewById(R.id.studentNameInput);
@@ -40,8 +48,11 @@ public class AddStudentsActivity extends Activity {
 
         //configuring buttons and nfc
         configureForegroundNFCDispatch();
+        configureNFCDialog();
+        configureWriteCompleteDialog();
         configureBackButton();
         configureDoneButton();
+        configureNFCButton();
     }
 
     public void onPause() {
@@ -55,8 +66,17 @@ public class AddStudentsActivity extends Activity {
     }
 
     public void onNewIntent(Intent intent) {
-        Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        tagReaderWriter.writeTag(tagFromIntent,idField.getText().toString());
+        if(writeToNFC) {
+            Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            tagReaderWriter.writeTag(tagFromIntent, idField.getText().toString(), nameField.getText().toString());
+            nfcDialog.dismiss();
+            writeToNFC = false;
+            writeCompleteDialog.show();
+        }
+        else{
+            Toast toast = Toast.makeText(this,"Click write to NFC first.",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     private void configureBackButton(){
@@ -74,8 +94,36 @@ public class AddStudentsActivity extends Activity {
         acb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createStudent(new Student(nameField.getText().toString(),idField.getText().toString()));
-                finish();
+                String name = nameField.getText().toString();
+                String id = idField.getText().toString();
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(id)){
+                    nameField.setError("Name field cannot be empty");
+                    idField.setError("ID field cannot be empty");
+                }
+                else {
+                    createStudent(new Student(name, idField.getText().toString()));
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void configureNFCButton(){
+        AppCompatButton acb = findViewById(R.id.NFCButton);
+        acb.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String name = nameField.getText().toString();
+                String id = idField.getText().toString();
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(id)){
+                    nameField.setError("Name field cannot be empty");
+                    idField.setError("ID field cannot be empty");
+                }
+                else {
+                    writeToNFC = true;
+                    nfcDialog.show();
+                }
+
             }
         });
     }
@@ -98,6 +146,31 @@ public class AddStudentsActivity extends Activity {
         intentFiltersArray = new IntentFilter[] {ndef, };
 
         techListsArray = new String[][] { new String[] { Ndef.class.getName() } };
+    }
+
+    private void configureNFCDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Tap NFC Now").setTitle("Writing Student To NFC");
+        builder.setNeutralButton("quit", new Dialog.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                writeToNFC = false;
+                dialog.dismiss();
+            }
+        });
+        nfcDialog = builder.create();
+    }
+
+    private void configureWriteCompleteDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Student was written to the NFC device").setTitle("NFC Written");
+        builder.setNeutralButton("Done", new Dialog.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        writeCompleteDialog = builder.create();
     }
 
     private void createStudent(Student s){

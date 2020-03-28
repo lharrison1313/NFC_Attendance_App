@@ -49,6 +49,17 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.insert(AttendanceContract.StudentTable.TABLE_NAME, null, values);
     }
 
+    public void deleteStudent(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.StudentTable.COLUM_NAME_SID + "=" + id;
+        db.delete(AttendanceContract.StudentTable.TABLE_NAME,where,null);
+    }
+
+    public void removeAllStudents(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(AttendanceContract.StudentTable.TABLE_NAME,null,null);
+    }
+
     public ArrayList<Student> retrieveAllStudents(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -69,6 +80,8 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         c.close();
         return students;
     }
+
+
 
 
 
