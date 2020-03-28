@@ -41,16 +41,6 @@
         android:layout_marginHorizontal="5dp"
 
         />
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/writeNFC"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_nfc_black_24dp"
-        android:layout_toRightOf="@id/deleteStudent"
-        android:layout_centerVertical="true"
-        android:layout_marginHorizontal="5dp"
-
-        />
 
 
 

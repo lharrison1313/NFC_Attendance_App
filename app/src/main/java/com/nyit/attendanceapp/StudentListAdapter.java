@@ -53,9 +53,9 @@ public class StudentListAdapter extends BaseAdapter {
         id.setText(mStudentList.get(position).getId());
 
         //setting up delete dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
-        builder.setPositiveButton("confirm",new Dialog.OnClickListener(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
+        builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AttendanceDbHelper db = new AttendanceDbHelper(mContext);
@@ -63,14 +63,15 @@ public class StudentListAdapter extends BaseAdapter {
                 populateStudentList();
             }
         });
-        builder.setNegativeButton("cancel",new Dialog.OnClickListener(){
+        builder1.setNegativeButton("cancel",new Dialog.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        final AlertDialog deleteDialog = builder.create();
+        final AlertDialog deleteDialog = builder1.create();
 
+        //setting up edit dialog
 
         //setting delete student button onclick
         AppCompatImageButton deleteButton = listItem.findViewById(R.id.deleteStudent);
