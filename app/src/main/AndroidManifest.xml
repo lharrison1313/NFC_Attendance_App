@@ -26,5 +26,8 @@
         <activity android:name=".AddSheetActivity">
 
         </activity>
+        <activity android:name=".StudentInfoActivity">
+
+        </activity>
     </application>
 </manifest>

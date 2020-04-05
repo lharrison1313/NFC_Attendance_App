@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -39,10 +40,11 @@ public class StudentsFragement extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //updateStudentList();
+
         lv = getActivity().findViewById(R.id.studentList);
         adapter = new StudentListAdapter(getActivity());
         lv.setAdapter(adapter);
+
 
         //creating add student button
         fab = getActivity().findViewById(R.id.floatingActionButtonStudents);

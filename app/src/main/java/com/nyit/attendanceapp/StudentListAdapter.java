@@ -1,9 +1,11 @@
 package com.nyit.attendanceapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,35 +54,46 @@ public class StudentListAdapter extends BaseAdapter {
         name.setText(mStudentList.get(position).getName());
         id.setText(mStudentList.get(position).getId());
 
-        //setting up delete dialog
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
-        builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
+        //setting onclick listener
+        listItem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AttendanceDbHelper db = new AttendanceDbHelper(mContext);
-                db.deleteStudent(mStudentList.get(position).getId());
-                populateStudentList();
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, StudentInfoActivity.class);
+                intent.putExtra("name",mStudentList.get(position).getName());
+                intent.putExtra("id",mStudentList.get(position).getId());
+                mContext.startActivity(intent);
             }
         });
-        builder1.setNegativeButton("cancel",new Dialog.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        final AlertDialog deleteDialog = builder1.create();
+
+//        //setting up delete dialog
+//        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+//        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
+//        builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                AttendanceDbHelper db = new AttendanceDbHelper(mContext);
+//                db.deleteStudent(mStudentList.get(position).getId());
+//                populateStudentList();
+//            }
+//        });
+//        builder1.setNegativeButton("cancel",new Dialog.OnClickListener(){
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        final AlertDialog deleteDialog = builder1.create();
 
         //setting up edit dialog
 
-        //setting delete student button onclick
-        AppCompatImageButton deleteButton = listItem.findViewById(R.id.deleteStudent);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteDialog.show();
-            }
-        });
+//        //setting delete student button onclick
+//        AppCompatImageButton deleteButton = listItem.findViewById(R.id.deleteStudent);
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                deleteDialog.show();
+//            }
+//        });
 
         
         return listItem;
