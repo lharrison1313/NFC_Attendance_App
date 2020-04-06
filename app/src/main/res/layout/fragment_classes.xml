@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Classes"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonClasses"
@@ -24,4 +17,19 @@
         android:layout_marginRight="20sp"
         />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Search Classes"
+        android:id="@+id/classSearch"
+
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/classSearch"
+        android:id="@+id/classList"
+
+        />
 </RelativeLayout>
