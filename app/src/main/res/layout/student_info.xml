@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:id="@+id/infoStudentHeader"
+        android:background="@color/colorPrimary"
+        android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/infoStudentName"
+            android:text="Name"
+            android:textSize="50dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/infoStudentID"
+            android:text="ID"
+            android:textSize="40dp"
+            android:layout_below="@+id/infoStudentName"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/infoAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/infoStudentHeader"
+        android:padding="10dp"
+        >
+        <TextView
+            android:id="@+id/infoPresents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Presents:"
+            android:textSize="30dp"
+            android:layout_marginVertical="2dp"
+            />
+        <TextView
+            android:id="@+id/infoAbsences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences:"
+            android:textSize="30dp"
+            android:layout_below="@id/infoPresents"
+            android:layout_marginVertical="2dp"
+            />
+        <TextView
+            android:id="@+id/infoTardies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tardies:"
+            android:textSize="30dp"
+            android:layout_below="@id/infoAbsences"
+            android:layout_marginVertical="2dp"
+            />
+        <TextView
+            android:id="@+id/infoExcused"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excused:"
+            android:textSize="30dp"
+            android:layout_below="@id/infoTardies"
+            android:layout_marginVertical="2dp"
+            />
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/infoNFC"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/infoAttendance"
+        android:layout_centerHorizontal="true"
+        android:text="write to nfc"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/infoDeleteStudent"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:background="@color/red"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/infoDone"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:text="done"
+        />
+
+</RelativeLayout>

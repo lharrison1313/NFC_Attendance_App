@@ -13,23 +13,23 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 
-import com.google.android.material.textfield.TextInputEditText;
+public class StudentInfoActivity extends Activity {
 
-public class AddStudentsActivity extends Activity {
-
-    private AttendanceDbHelper db;
+    String name;
+    String id;
+    AlertDialog deleteDialog;
     private NfcAdapter adapter;
     private IntentFilter[] intentFiltersArray;
     private String[][] techListsArray;
     private PendingIntent pendingIntent;
     private TagReaderWriter tagReaderWriter;
-    private TextInputEditText nameField;
-    private TextInputEditText idField;
     private AlertDialog nfcDialog;
     private AlertDialog writeCompleteDialog;
     private boolean writeToNFC;
@@ -37,22 +37,15 @@ public class AddStudentsActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_student_dialog);
-
-        db = new AttendanceDbHelper(this);
-        writeToNFC = false;
-
-        //linking textfield objects
-        nameField = findViewById(R.id.studentNameInput);
-        idField = findViewById(R.id.studentIdInput);
-
-        //configuring buttons and nfc
-        configureForegroundNFCDispatch();
-        configureNFCDialog();
-        configureWriteCompleteDialog();
+        setContentView(R.layout.student_info);
+        configureDeleteDialog();
+        configureDeleteStudentButton();
         configureBackButton();
-        configureDoneButton();
+        configureStudentHeader();
         configureNFCButton();
+        configureNFCDialog();
+        configureForegroundNFCDispatch();
+        configureWriteCompleteDialog();
     }
 
     public void onPause() {
@@ -68,7 +61,7 @@ public class AddStudentsActivity extends Activity {
     public void onNewIntent(Intent intent) {
         if(writeToNFC) {
             Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            tagReaderWriter.writeTag(tagFromIntent, idField.getText().toString(), nameField.getText().toString());
+            tagReaderWriter.writeTag(tagFromIntent, id, name);
             nfcDialog.dismiss();
             writeToNFC = false;
             writeCompleteDialog.show();
@@ -80,7 +73,7 @@ public class AddStudentsActivity extends Activity {
     }
 
     private void configureBackButton(){
-        AppCompatButton acb = findViewById(R.id.cancelStudents);
+        AppCompatButton acb = findViewById(R.id.infoDone);
         acb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,41 +82,54 @@ public class AddStudentsActivity extends Activity {
         });
     }
 
-    private void configureDoneButton(){
-        AppCompatButton acb = findViewById(R.id.doneStudents);
+    private void configureStudentHeader(){
+        name = getIntent().getStringExtra("name");
+        id = getIntent().getStringExtra("id");
+        TextView nameText = findViewById(R.id.infoStudentName);
+        TextView idText = findViewById(R.id.infoStudentID);
+
+        nameText.setText(name);
+        idText.setText(id);
+    }
+
+    private void configureDeleteDialog(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
+        builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteStudent();
+                finish();
+
+            }
+        });
+        builder1.setNegativeButton("cancel",new Dialog.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        deleteDialog = builder1.create();
+    }
+
+    private void configureDeleteStudentButton(){
+        AppCompatImageButton acb = findViewById(R.id.infoDeleteStudent);
+
         acb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameField.getText().toString();
-                String id = idField.getText().toString();
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(id)){
-                    nameField.setError("Name field cannot be empty");
-                    idField.setError("ID field cannot be empty");
-                }
-                else {
-                    createStudent(new Student(name, idField.getText().toString()));
-                    finish();
-                }
+                deleteDialog.show();
             }
         });
     }
 
     private void configureNFCButton(){
-        AppCompatButton acb = findViewById(R.id.NFCButton);
+        AppCompatButton acb = findViewById(R.id.infoNFC);
         acb.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String name = nameField.getText().toString();
-                String id = idField.getText().toString();
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(id)){
-                    nameField.setError("Name field cannot be empty");
-                    idField.setError("ID field cannot be empty");
-                }
-                else {
                     writeToNFC = true;
                     nfcDialog.show();
-                }
-
             }
         });
     }
@@ -173,11 +179,8 @@ public class AddStudentsActivity extends Activity {
         writeCompleteDialog = builder.create();
     }
 
-    private void createStudent(Student s){
-        db.addStudent(s);
+    private void deleteStudent(){
+        AttendanceDbHelper db = new AttendanceDbHelper(this);
+        db.deleteStudent(id);
     }
-
-
-
-
 }

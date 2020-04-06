@@ -10,16 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Student Name"
+        android:hint="Student Name"
+        android:maxLength="13"
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/studentIdInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Student ID"
+        android:hint="Student ID"
         android:layout_below="@id/studentNameInput"
         android:layout_marginTop="10dp"
+        android:maxLength="13"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:id="@+id/NFCButton"
+        android:layout_height="50dp"
+        android:layout_below="@id/studentIdInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="write to nfc"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/doneStudents"
