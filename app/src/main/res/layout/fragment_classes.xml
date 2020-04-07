@@ -22,7 +22,6 @@
         android:layout_height="60dp"
         android:hint="Search Classes"
         android:id="@+id/classSearch"
-
         />
 
     <ListView
