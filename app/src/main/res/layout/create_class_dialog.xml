@@ -37,12 +37,13 @@
         android:background="@color/grey"
         >
 
-        <androidx.appcompat.widget.SearchView
-        android:id="@+id/classSearchStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search Students"
-        android:layout_marginVertical="5dp"
+        <SearchView
+            android:id="@+id/classSearchStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search Students"
+            android:layout_marginVertical="5dp"
+            android:iconifiedByDefault="false"
         />
 
         <ListView
