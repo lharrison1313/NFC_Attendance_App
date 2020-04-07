@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.google.android.material.textfield.TextInputEditText
+    <SearchView
         android:id="@+id/studentSearch"
         android:layout_width="match_parent"
         android:layout_height="60dp"

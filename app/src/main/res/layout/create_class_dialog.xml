@@ -37,7 +37,7 @@
         android:background="@color/grey"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.appcompat.widget.SearchView
         android:id="@+id/classSearchStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

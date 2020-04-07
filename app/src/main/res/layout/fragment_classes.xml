@@ -17,10 +17,9 @@
         android:layout_marginRight="20sp"
         />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="Search Classes"
         android:id="@+id/classSearch"
         />
 
