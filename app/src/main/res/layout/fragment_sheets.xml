@@ -3,13 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attendance Sheets"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        />
+
+    <SearchView
+        android:iconifiedByDefault="false"
+        android:id="@+id/SheetSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+    />
+
+    <ListView
+        android:id="@+id/SheetList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/SheetSearch"
+    />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonSheets"
