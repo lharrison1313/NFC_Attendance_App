@@ -69,12 +69,14 @@
         android:layout_alignParentRight="true"
         android:text="done"
         />
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancel"
+        android:id="@+id/cancelSheets"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/cancel"
         android:layout_alignParentLeft="true"
-        android:text="cancel"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:text="cancel" />
 </RelativeLayout>

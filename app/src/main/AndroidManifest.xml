@@ -19,6 +19,17 @@
         <activity android:name=".AddStudentsActivity">
 
         </activity>
+<<<<<<< Updated upstream
+=======
+        <activity android:name=".AddClassActivity">
+
+        </activity>
+        <activity android:name=".AddTimesheetActivity">
+
+        </activity>
+
+
+>>>>>>> Stashed changes
     </application>
 
 </manifest>
