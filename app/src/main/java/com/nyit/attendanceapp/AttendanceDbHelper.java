@@ -196,8 +196,6 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     }
 
-
-
     public ArrayList<Lesson> retrieveAllLessons() {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -208,7 +206,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
                 AttendanceContract.LessonTable.COLUMN_NAME_TIME,
         };
 
-        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_CID + " ASC";
+        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_CID + "DESC";
 
         Cursor c = db.query(AttendanceContract.LessonTable.TABLE_NAME, projection, null, null, null, null, sorting);
         ArrayList<Lesson> lessons = new ArrayList<>();
