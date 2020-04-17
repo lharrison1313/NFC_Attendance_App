@@ -12,30 +12,30 @@ import java.util.List;
 
 
 
-public class ClassListAdapter<mContext> extends BaseAdapter {
+public class CourseListAdapter<mContext> extends BaseAdapter {
 
 
     private Context mContext;
-    private List<Class> mClassList;
+    private List<Course> mCourseList;
 
     //Constructor
-    public ClassListAdapter (Context m, List<Class> mList )
+    public CourseListAdapter(Context m, List<Course> mList )
     {
         this.mContext = m;
-        this.mClassList = mList;
+        this.mCourseList = mList;
     }
 
     @Override
     //getCount
     public int getCount()
     {
-        return mClassList.size();
+        return mCourseList.size();
     }
 
     //getItem
     public Object getItem(int position)
     {
-        return mClassList.get(position);
+        return mCourseList.get(position);
     }
 
     //getID
@@ -65,8 +65,8 @@ public class ClassListAdapter<mContext> extends BaseAdapter {
         TextView name =  listItem.findViewById(R.id.className);
         TextView id =  listItem.findViewById(R.id.classSection);
 
-        name.setText(mClassList.get(position).getName());
-        id.setText(mClassList.get(position).getSection());
+        name.setText(mCourseList.get(position).getName());
+        id.setText(mCourseList.get(position).getSection());
 
         return listItem;
 

@@ -14,7 +14,7 @@ public class AttendanceContract {
 
     }
 
-    public static class ClassTable {
+    public static class Course {
         // primary key CID and Section
         public static final String TABLE_NAME = "Class";
         public static final String COLUMN_NAME_CID = "CID";
@@ -26,7 +26,7 @@ public class AttendanceContract {
         // Primary key LID, Foreign key CID and Section
         public static final String TABLE_NAME = "Lesson";
         public static final String COLUMN_NAME_LID = "LID";
-        public static final String COLUM_NAME_CID = "CID";
+        public static final String COLUMN_NAME_CID = "CID";
         public static final String COLUMN_NAME_SECTION = "Section";
         public static final String COLUMN_NAME_LESSON = "LessonName";
         public static final String COLUMN_NAME_DATE = "Date";
@@ -37,7 +37,7 @@ public class AttendanceContract {
         // primary key CID, SID and Section
         public static final String TABLE_NAME = "RosterEntry";
         public static final String COLUMN_NAME_CID = "CID";
-        public static final String COLUM_NAME_SID = "SID";
+        public static final String COLUMN_NAME_SID = "SID";
         public static final String COLUMN_NAME_SECTION = "Section";
         public static final String COLUMN_NAME_PRESENT = "Present";
         public static final String COLUMN_NAME_ABSENT = "Absent";
@@ -50,7 +50,7 @@ public class AttendanceContract {
         // PRIMARY key LID and SID
         public static final String TABLE_NAME = "AttendanceEntry";
         public static final String COLUMN_NAME_LID = "LID";
-        public static final String COLUM_NAME_SID = "SID";
+        public static final String COLUMN_NAME_SID = "SID";
         public static final String COLUMN_NAME_PAXT = "PAXT";
     }
 

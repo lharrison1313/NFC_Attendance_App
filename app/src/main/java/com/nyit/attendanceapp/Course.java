@@ -1,11 +1,11 @@
 package com.nyit.attendanceapp;
 
-public class Class {
+public class Course {
     private String name;
     private String section;
     private String cid;
 
-    public Class (String name, String section, String cid){
+    public Course(String name, String section, String cid){
         this.name = name;
         this.section = section;
         this.cid = cid;
