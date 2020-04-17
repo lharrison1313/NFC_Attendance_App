@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/SheetInfoHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        >
+        <TextView
+            android:id="@+id/SheetInfoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="40dp"
+            />
+        <TextView
+            android:id="@+id/SheetInfoClassName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Name"
+            android:textSize="30dp"
+            android:layout_below="@id/SheetInfoDate"
+            />
+        <TextView
+            android:id="@+id/SheetInfoSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Section"
+            android:textSize="30dp"
+            android:layout_below="@id/SheetInfoClassName"
+            />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/SheetInfoStudentList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sheetDeleteButton"
+        android:layout_marginVertical="5dp"
+        android:layout_below="@id/SheetInfoHeader"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sheetDoneButton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:text="Done"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/sheetDeleteButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Delete"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight = "true"
+        android:layout_margin="10dp"
+        android:background="@color/red"
+        android:src="@drawable/ic_delete_black_24dp"
+        />
+</RelativeLayout>
