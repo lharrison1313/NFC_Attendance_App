@@ -22,18 +22,18 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
             AttendanceContract.StudentTable.TABLE_NAME);
 
     private static final String SQL_CREATE_CLASS = String.format(
-            "CREATE TABLE %s (%s TEXT PRIMARY KEY, %s TEXT PRIMARY KEY, %s TEXT)",
+            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, )",
             AttendanceContract.Course.TABLE_NAME, AttendanceContract.Course.COLUMN_NAME_CID,
-            AttendanceContract.Course.COLUMN_NAME_CNAME, AttendanceContract.Course.COLUMN_NAME_SECTION);
+            AttendanceContract.Course.COLUMN_NAME_SECTION, AttendanceContract.Course.COLUMN_NAME_CNAME);
 
     private static final String SQL_DELETE_CLASS = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.Course.TABLE_NAME);
 
     private static final String SQL_CREATE_LESSON = String.format(
-            "CREATE TABLE %s (%s TEXT PRIMARY KEY,%s TEXT FOREIGN KEY,%s TEXT FOREIGN KEY, %s TEXT, %s TEXT, %s TEXT)",
+            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s INTEGER, %s TEXT, %s TEXT)",
             AttendanceContract.LessonTable.TABLE_NAME, AttendanceContract.LessonTable.COLUMN_NAME_LID,
-            AttendanceContract.LessonTable.COLUMN_NAME_CID, AttendanceContract.LessonTable.COLUMN_NAME_SECTION,
-            AttendanceContract.LessonTable.COLUMN_NAME_LESSON);
+            AttendanceContract.LessonTable.COLUMN_NAME_CID, AttendanceContract.LessonTable.COLUMN_NAME_DATE,
+            AttendanceContract.LessonTable.COLUMN_NAME_TIME);
 
     private static final String SQL_DELETE_LESSON = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.LessonTable.TABLE_NAME);
@@ -107,7 +107,6 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // loading getting values from class object
         ContentValues values = new ContentValues();
-        values.put(AttendanceContract.Course.COLUMN_NAME_CID, c.getCid());
         values.put(AttendanceContract.Course.COLUMN_NAME_CNAME, c.getName());
         values.put(AttendanceContract.Course.COLUMN_NAME_SECTION, c.getSection());
 
@@ -115,9 +114,9 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.insert(AttendanceContract.Course.TABLE_NAME, null, values);
     }
 
-    public void deleteCourse(String id) {
+    public void deleteCourse(String cid) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.Course.COLUMN_NAME_CID + "=" + id;
+        String where = AttendanceContract.Course.COLUMN_NAME_CID + "=" + cid;
         db.delete(AttendanceContract.Course.TABLE_NAME, where, null);
     }
 
@@ -126,13 +125,35 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.delete(AttendanceContract.StudentTable.TABLE_NAME, null, null);
     }
 
+    public Course retrieveSingleCourse(int cid){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+            AttendanceContract.Course.COLUMN_NAME_CID,
+            AttendanceContract.Course.COLUMN_NAME_CNAME,
+            AttendanceContract.Course.COLUMN_NAME_SECTION
+        };
+
+        String where = AttendanceContract.Course.COLUMN_NAME_CID + "=" + cid;
+
+        Cursor c = db.query(AttendanceContract.Course.TABLE_NAME, projection, where, null, null, null, null);
+        c.moveToNext();
+
+        int id = c.getInt(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_CID));
+        String name = c.getString(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_CNAME));
+        String section = c.getString(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_SECTION));
+
+        return new Course(name,section,id);
+    }
+
     public ArrayList<Course> retrieveAllCourses() {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String[] projection = {       AttendanceContract.Course.COLUMN_NAME_CID,
+        String[] projection = {
+            AttendanceContract.Course.COLUMN_NAME_CID,
             AttendanceContract.Course.COLUMN_NAME_CNAME,
-          AttendanceContract.Course.COLUMN_NAME_SECTION
-            };
+            AttendanceContract.Course.COLUMN_NAME_SECTION
+        };
 
         String sorting = AttendanceContract.Course.COLUMN_NAME_CNAME + " ASC";
 
@@ -140,7 +161,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         ArrayList<Course> courses = new ArrayList<>();
         while (c.moveToNext()) {
 
-            String id = c.getString(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_CID));
+            int id = c.getInt(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_CID));
             String name = c.getString(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_CNAME));
             String section = c.getString(c.getColumnIndex(AttendanceContract.Course.COLUMN_NAME_SECTION));
             courses.add(new Course(name, section, id));
@@ -155,10 +176,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // loading getting values from lesson object
         ContentValues values = new ContentValues();
-        values.put(AttendanceContract.LessonTable.COLUMN_NAME_LID, l.getLid());
         values.put(AttendanceContract.LessonTable.COLUMN_NAME_CID, l.getCourse().getCid());
-        values.put(AttendanceContract.LessonTable.COLUMN_NAME_SECTION, l.getCourse().getSection());
-        values.put(AttendanceContract.LessonTable.COLUMN_NAME_LESSON, l.getLessonName());
         values.put(AttendanceContract.LessonTable.COLUMN_NAME_DATE, l.getDate());
         values.put(AttendanceContract.LessonTable.COLUMN_NAME_TIME, l.getTime());
 
@@ -180,33 +198,31 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
 
 
-//    public ArrayList<Lesson> retrieveAllLessons() {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String[] projection = {         AttendanceContract.LessonTable.COLUMN_NAME_LID,
-//        AttendanceContract.LessonTable.COLUMN_NAME_CID,
-//        AttendanceContract.LessonTable.COLUMN_NAME_SECTION,
-//        AttendanceContract.LessonTable.COLUMN_NAME_LESSON,
-//        AttendanceContract.LessonTable.COLUMN_NAME_DATE,
-//        AttendanceContract.LessonTable.COLUMN_NAME_TIME,
-//            };
-//
-//        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_LESSON + " ASC";
-//
-//        Cursor c = db.query(AttendanceContract.LessonTable.TABLE_NAME, projection, null, null, null, null, sorting);
-//        ArrayList<Course> lessons = new ArrayList<>();
-//        while (c.moveToNext()) {
-//
-//            String id = c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUM_NAME_CID));
-//            String section = c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_SECTION));
-//            String lesson= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_LESSON));
-//            String date= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_DATE));
-//            String time= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_TIME));
-//
-//
-//            lessons.add(new Lesson(lesson,));
-//        }
-//        c.close();
-//        return lessons;
-//    }
+    public ArrayList<Lesson> retrieveAllLessons() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                AttendanceContract.LessonTable.COLUMN_NAME_LID,
+                AttendanceContract.LessonTable.COLUMN_NAME_CID,
+                AttendanceContract.LessonTable.COLUMN_NAME_DATE,
+                AttendanceContract.LessonTable.COLUMN_NAME_TIME,
+        };
+
+        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_CID + " ASC";
+
+        Cursor c = db.query(AttendanceContract.LessonTable.TABLE_NAME, projection, null, null, null, null, sorting);
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        while (c.moveToNext()) {
+
+            int cid = c.getInt(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_CID));
+            int lid = c.getInt(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_LID));
+            String date= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_DATE));
+            String time= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_TIME));
+            Course course = retrieveSingleCourse(cid);
+
+            lessons.add(new Lesson(date,time,course,lid));
+        }
+        c.close();
+        return lessons;
+    }
 }

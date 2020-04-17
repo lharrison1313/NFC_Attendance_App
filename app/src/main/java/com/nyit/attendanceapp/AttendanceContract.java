@@ -27,8 +27,6 @@ public class AttendanceContract {
         public static final String TABLE_NAME = "Lesson";
         public static final String COLUMN_NAME_LID = "LID";
         public static final String COLUMN_NAME_CID = "CID";
-        public static final String COLUMN_NAME_SECTION = "Section";
-        public static final String COLUMN_NAME_LESSON = "LessonName";
         public static final String COLUMN_NAME_DATE = "Date";
         public static final String COLUMN_NAME_TIME = "Time";
     }
