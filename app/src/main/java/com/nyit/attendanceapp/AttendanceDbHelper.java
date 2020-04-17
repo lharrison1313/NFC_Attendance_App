@@ -23,17 +23,17 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_CLASS = String.format(
             "CREATE TABLE %s (%s TEXT PRIMARY KEY, %s TEXT PRIMARY KEY, %s TEXT)",
-            AttendanceContract.ClassTable.TABLE_NAME, AttendanceContract.ClassTable.COLUM_NAME_CID,
-            AttendanceContract.ClassTable.COLUM_NAME_CNAME, AttendanceContract.ClassTable.COLUM_NAME_SECTION);
+            AttendanceContract.ClassTable.TABLE_NAME, AttendanceContract.ClassTable.COLUMN_NAME_CID,
+            AttendanceContract.ClassTable.COLUMN_NAME_CNAME, AttendanceContract.ClassTable.COLUMN_NAME_SECTION);
 
     private static final String SQL_DELETE_CLASS = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.ClassTable.TABLE_NAME);
 
     private static final String SQL_CREATE_LESSON = String.format(
             "CREATE TABLE %s (%s TEXT PRIMARY KEY,%s TEXT FOREIGN KEY,%s TEXT FOREIGN KEY, %s TEXT, %s TEXT, %s TEXT)",
-            AttendanceContract.LessonTable.TABLE_NAME, AttendanceContract.LessonTable.COLUM_NAME_LID,
-            AttendanceContract.LessonTable.COLUM_NAME_CID, AttendanceContract.LessonTable.COLUM_NAME_SECTION,
-            AttendanceContract.LessonTable.LessonName);
+            AttendanceContract.LessonTable.TABLE_NAME, AttendanceContract.LessonTable.COLUMN_NAME_LID,
+            AttendanceContract.LessonTable.COLUM_NAME_CID, AttendanceContract.LessonTable.COLUMN_NAME_SECTION,
+            AttendanceContract.LessonTable.COLUMN_NAME_LESSON);
 
     private static final String SQL_DELETE_LESSON = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.LessonTable.TABLE_NAME);
@@ -55,7 +55,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_STUDENTS);
         db.execSQL(SQL_DELETE_CLASS);
-        db.execSQL(SQL_CREATE_LESSON);
+        db.execSQL(SQL_DELETE_LESSON);
         onCreate(db);
     }
 
@@ -117,7 +117,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     public void deleteClass(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.ClassTable.COLUM_NAME_CID + "=" + id;
+        String where = AttendanceContract.ClassTable.COLUMN_NAME_CID + "=" + id;
         db.delete(AttendanceContract.ClassTable.TABLE_NAME, where, null);
     }
 
@@ -125,6 +125,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(AttendanceContract.StudentTable.TABLE_NAME, null, null);
     }
+
     public ArrayList<Class> retrieveAllClasses() {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -139,7 +140,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         ArrayList<Class> classes = new ArrayList<>();
         while (c.moveToNext()) {
 
-            String id = c.getString(c.getColumnIndex(AttendanceContract.CLassTable.COLUM_NAME_CID));
+            String id = c.getString(c.getColumnIndex(AttendanceContract.ClassTable.COLUMN_NAME_CID));
             String name = c.getString(c.getColumnIndex(AttendanceContract.ClassTable.COLUMN_NAME_CNAME));
             String section = c.getString(c.getColumnIndex(AttendanceContract.ClassTable.COLUMN_NAME_SECTION));
             classes.add(new Student(id,name, section));
