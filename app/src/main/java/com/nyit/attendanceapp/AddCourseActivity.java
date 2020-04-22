@@ -3,16 +3,18 @@ package com.nyit.attendanceapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
-public class AddClassActivity extends Activity {
+public class AddCourseActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_class_dialog);
         configureBackButton();
+        configureStudentList();
     }
 
     private void configureBackButton(){
@@ -23,5 +25,11 @@ public class AddClassActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    private void configureStudentList(){
+        ListView lv = findViewById(R.id.createClassStudentList);
+        SelectableStudentListAdapter adapter = new SelectableStudentListAdapter(this);
+        lv.setAdapter(adapter);
     }
 }

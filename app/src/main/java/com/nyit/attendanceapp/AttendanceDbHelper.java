@@ -38,6 +38,16 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_LESSON = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.LessonTable.TABLE_NAME);
 
+    private static final String SQL_CREATE_ROSTER_ENTRY = String.format(
+            "Create Table %s (%s INTEGER, %s TEXT, %s INTEGER, %s INTEGER, %s INTEGER, %s INTEGER, PRIMARY KEY(%s, %s))",
+            AttendanceContract.RosterEntryTable.COLUMN_NAME_CID, AttendanceContract.RosterEntryTable.COLUMN_NAME_SID,
+            AttendanceContract.RosterEntryTable.COLUMN_NAME_PRESENT, AttendanceContract.RosterEntryTable.COLUMN_NAME_ABSENT,
+            AttendanceContract.RosterEntryTable.COLUMN_NAME_EXCUSED, AttendanceContract.RosterEntryTable.COLUMN_NAME_TARDY,
+            AttendanceContract.RosterEntryTable.COLUMN_NAME_CID, AttendanceContract.RosterEntryTable.COLUMN_NAME_SID);
+
+    private static final String SQL_DELETE_ROSTER_ENTRY = String.format("DROP TABLE IF EXISTS %s",
+            AttendanceContract.RosterEntryTable.TABLE_NAME);
+
     // Constructor
     public AttendanceDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -49,6 +59,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_STUDENTS);
         db.execSQL(SQL_CREATE_CLASS);
         db.execSQL(SQL_CREATE_LESSON);
+        db.execSQL(SQL_CREATE_ROSTER_ENTRY);
     }
 
     @Override
@@ -56,6 +67,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_STUDENTS);
         db.execSQL(SQL_DELETE_CLASS);
         db.execSQL(SQL_DELETE_LESSON);
+        db.execSQL(SQL_DELETE_ROSTER_ENTRY);
         onCreate(db);
     }
 

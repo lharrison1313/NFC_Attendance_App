@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ClasssesFragement extends Fragment  {
+public class ClasssesFragment extends Fragment  {
 
     FloatingActionButton fab;
 
@@ -31,7 +31,7 @@ public class ClasssesFragement extends Fragment  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AddClassActivity.class);
+                Intent intent = new Intent(getActivity(), AddCourseActivity.class);
                 getActivity().startActivity(intent);
             }
         });

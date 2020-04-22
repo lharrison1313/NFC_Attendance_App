@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class SheetsFragement extends Fragment{
+public class SheetsFragment extends Fragment{
 
     FloatingActionButton fab;
 

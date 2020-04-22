@@ -31,25 +31,23 @@ public class AttendanceContract {
         public static final String COLUMN_NAME_TIME = "Time";
     }
 
-    public static class RosterEntryTable {
-        // primary key CID, SID and Section
-        public static final String TABLE_NAME = "RosterEntry";
-        public static final String COLUMN_NAME_CID = "CID";
-        public static final String COLUMN_NAME_SID = "SID";
-        public static final String COLUMN_NAME_SECTION = "Section";
-        public static final String COLUMN_NAME_PRESENT = "Present";
-        public static final String COLUMN_NAME_ABSENT = "Absent";
-        public static final String COLUMN_NAME_EXCUSED = "Excused";
-        public static final String COLUMN_NAME_TARDY = "Tardy";
-    }
-
-
     public static class AttendanceEntryTable {
         // PRIMARY key LID and SID
         public static final String TABLE_NAME = "AttendanceEntry";
         public static final String COLUMN_NAME_LID = "LID";
         public static final String COLUMN_NAME_SID = "SID";
         public static final String COLUMN_NAME_PAXT = "PAXT";
+    }
+
+    public static class RosterEntryTable {
+        // primary key CID, SID and Section
+        public static final String TABLE_NAME = "RosterEntry";
+        public static final String COLUMN_NAME_CID = "CID";
+        public static final String COLUMN_NAME_SID = "SID";
+        public static final String COLUMN_NAME_PRESENT = "Present";
+        public static final String COLUMN_NAME_ABSENT = "Absent";
+        public static final String COLUMN_NAME_EXCUSED = "Excused";
+        public static final String COLUMN_NAME_TARDY = "Tardy";
     }
 
 }

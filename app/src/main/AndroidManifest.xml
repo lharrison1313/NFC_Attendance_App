@@ -20,7 +20,7 @@
         <activity android:name=".AddStudentsActivity">
 
         </activity>
-        <activity android:name=".AddClassActivity">
+        <activity android:name=".AddCourseActivity">
 
         </activity>
         <activity android:name=".AddSheetActivity">
