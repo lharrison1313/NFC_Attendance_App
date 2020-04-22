@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ClasssesFragment extends Fragment  {
 
     FloatingActionButton fab;
+    ListView lv;
+    CourseListAdapter adapter;
 
     @Nullable
     @Override
@@ -23,8 +26,20 @@ public class ClasssesFragment extends Fragment  {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adapter.populateCourseList();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        //creating class list
+        lv = getActivity().findViewById(R.id.classList);
+        adapter = new CourseListAdapter(getActivity());
+        lv.setAdapter(adapter);
 
         //creating add class button
         fab = getActivity().findViewById(R.id.floatingActionButtonClasses);
@@ -35,6 +50,9 @@ public class ClasssesFragment extends Fragment  {
                 getActivity().startActivity(intent);
             }
         });
+
+
+
     }
 
 }
