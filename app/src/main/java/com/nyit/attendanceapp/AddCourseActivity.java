@@ -2,6 +2,7 @@ package com.nyit.attendanceapp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
@@ -51,12 +52,20 @@ public class AddCourseActivity extends Activity {
         acb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String name = courseNameInput.getText().toString();
                 String section = courseSectionInput.getText().toString();
-                Course c = new Course(name,section);
-                db.addCourse(c);
-                db.addMultipleRosterEntry(adapter.getSelectedStudents(),c);
-                finish();
+
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(section)){
+                    courseNameInput.setError("Name field cannot be empty");
+                    courseSectionInput.setError("ID field cannot be empty");
+                }
+                else {
+                    Course c = new Course(name,section);
+                    db.addCourse(c);
+                    db.addMultipleRosterEntry(adapter.getSelectedStudents(),c);
+                    finish();
+                }
             }
         });
     }

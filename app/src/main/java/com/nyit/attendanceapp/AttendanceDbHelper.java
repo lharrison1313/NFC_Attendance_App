@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -90,6 +90,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = AttendanceContract.StudentTable.COLUM_NAME_SID + "=" + id;
         db.delete(AttendanceContract.StudentTable.TABLE_NAME, where, null);
+        deleteStudentFromAllRosters(id);
     }
 
     public void removeAllStudents() {
@@ -131,9 +132,12 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     public void deleteCourse(Course c) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.Course.COLUMN_NAME_CNAME + "=" + c.getName() + " AND " +
-                AttendanceContract.Course.COLUMN_NAME_SECTION + "=" + c.getSection();
-        db.delete(AttendanceContract.Course.TABLE_NAME, where, null);
+        String where = AttendanceContract.Course.COLUMN_NAME_CNAME + "=?" + " AND " +
+                AttendanceContract.Course.COLUMN_NAME_SECTION + "=?" ;
+        String[] args = {c.getName(),c.getSection()};
+        db.delete(AttendanceContract.Course.TABLE_NAME, where,args );
+        //deleting roster along with course
+        deleteEntireRoster(c);
     }
 
     public void removeAllCourse() {
@@ -284,6 +288,29 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return students;
+    }
+
+    public void deleteEntireRoster(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassName + "=?" + " AND "
+                + AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassSection + "=?";
+        String[] args = {c.getName(),c.getSection()};
+        db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, args);
+    }
+
+    public void deleteStudentFromRoster(String id, Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassName + "=?" + " AND "
+                + AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassSection + "=?" + " AND "
+                + AttendanceContract.RosterEntryTable.COLUMN_NAME_SID + "=?";
+        String[] args = {c.getName(),c.getSection(),id};
+        db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, args);
+    }
+
+    public void deleteStudentFromAllRosters(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_SID + "=" + id;
+        db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, null);
     }
 
 }

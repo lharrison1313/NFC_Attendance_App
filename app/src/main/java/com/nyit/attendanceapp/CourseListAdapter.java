@@ -72,15 +72,15 @@ public class CourseListAdapter<mContext> extends BaseAdapter {
         id.setText(mCourseList.get(position).getSection());
 
         //setting onclick listener
-//        listItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, );
-//                intent.putExtra("name",mCourseList.get(position).getName());
-//                intent.putExtra("section",mCourseList.get(position).getSection());
-//                mContext.startActivity(intent);
-//            }
-//        });
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ClassInfoActivity.class );
+                intent.putExtra("name",mCourseList.get(position).getName());
+                intent.putExtra("section",mCourseList.get(position).getSection());
+                mContext.startActivity(intent);
+            }
+        });
 
         return listItem;
 

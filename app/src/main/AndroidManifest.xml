@@ -29,5 +29,8 @@
         <activity android:name=".StudentInfoActivity">
 
         </activity>
+        <activity android:name=".ClassInfoActivity">
+
+        </activity>
     </application>
 </manifest>
