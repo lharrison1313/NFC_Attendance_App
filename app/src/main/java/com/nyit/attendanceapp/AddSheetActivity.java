@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -40,6 +41,7 @@ public class AddSheetActivity extends Activity {
         configureDateButton();
         configureTimeDialog();
         configureTimeButton();
+        configureDoneButton();
     }
 
     private void configureClassSpinner(){
@@ -116,6 +118,24 @@ public class AddSheetActivity extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void configureDoneButton(){
+        final Toast t = Toast.makeText(this,"One or more fields are missing selections.",Toast.LENGTH_SHORT);
+        AppCompatButton acb =  findViewById(R.id.lessonDone);
+        acb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(date != null && time != null && spinner.getSelectedItem() != null) {
+                    Lesson l = new Lesson(date, time, (Course) spinner.getSelectedItem());
+                    db.addLesson(l);
+                    finish();
+                }
+                else{
+                    t.show();
+                }
             }
         });
     }

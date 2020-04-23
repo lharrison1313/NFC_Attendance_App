@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,11 +16,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class SheetsFragment extends Fragment{
 
     FloatingActionButton fab;
+    LessonListAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sheets,container,false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.populateLessonList();
     }
 
     @Override
@@ -35,6 +43,13 @@ public class SheetsFragment extends Fragment{
                 getActivity().startActivity(intent);
             }
         });
+
+        ListView lv = getActivity().findViewById(R.id.SheetList);
+        adapter = new LessonListAdapter(getContext());
+        lv.setAdapter(adapter);
+
+
+
 
     }
 

@@ -225,7 +225,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
                 AttendanceContract.LessonTable.COLUMN_NAME_TIME,
         };
 
-        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_LID + "DESC";
+        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_LID + " DESC";
 
         Cursor c = db.query(AttendanceContract.LessonTable.TABLE_NAME, projection, null, null, null, null, sorting);
         ArrayList<Lesson> lessons = new ArrayList<>();

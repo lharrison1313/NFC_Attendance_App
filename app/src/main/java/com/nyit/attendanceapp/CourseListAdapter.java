@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 
-
-
 public class CourseListAdapter<mContext> extends BaseAdapter {
 
 
