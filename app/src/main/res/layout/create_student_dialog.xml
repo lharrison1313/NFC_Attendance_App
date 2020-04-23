@@ -4,34 +4,40 @@
     android:padding="20dp"
 
     >
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/studentNameInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Student Name"
-        android:maxLength="13"
-        />
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/studentIdInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Student ID"
-        android:layout_below="@id/studentNameInput"
-        android:layout_marginTop="10dp"
-        android:maxLength="13"
-        />
-    <androidx.appcompat.widget.AppCompatButton
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:id="@+id/NFCButton"
-        android:layout_height="50dp"
-        android:layout_below="@id/studentIdInput"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="write to nfc"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/studentNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Student Name"
+            android:maxLength="13"
+            android:layout_marginVertical="10dp"
+            />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/studentIdInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Student ID"
+            android:layout_below="@id/studentNameInput"
+            android:maxLength="13"
+            android:layout_marginVertical="10dp"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:id="@+id/NFCButton"
+            android:layout_height="50dp"
+            android:layout_below="@id/studentIdInput"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="10dp"
+            android:text="write to nfc"
+            />
+    </RelativeLayout>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/doneStudents"
         android:layout_width="100dp"

@@ -13,5 +13,9 @@ public class Course {
 
     public String getSection() {return section;}
 
+    public String toString(){
+        return String.format("%s: %s", name, section);
+    }
+
 
 }
