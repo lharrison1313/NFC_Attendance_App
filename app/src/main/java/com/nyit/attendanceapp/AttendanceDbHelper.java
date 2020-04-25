@@ -51,6 +51,15 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ROSTER_ENTRY = String.format("DROP TABLE IF EXISTS %s",
             AttendanceContract.RosterEntryTable.TABLE_NAME);
 
+    private static final String SQL_CREATE_ATTENDANCE_ENTRY = String.format(
+            "Create Table %s (%s INTEGER, %s Text, %s Text, PRIMARY KEY(%s,%s))",
+            AttendanceContract.AttendanceEntryTable.TABLE_NAME, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID,
+            AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_PAXT,
+            AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID);
+
+    private static final String SQL_DELETE_ATTENDANCE_ENTRY = String.format("DROP TABLE IF EXISTS %s",
+            AttendanceContract.AttendanceEntryTable.TABLE_NAME);
+
     // Constructor
     public AttendanceDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -138,6 +147,8 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.delete(AttendanceContract.Course.TABLE_NAME, where,args );
         //deleting roster along with course
         deleteEntireRoster(c);
+        //deleting all lessons along with course
+        deleteAllCourseLessons(c);
     }
 
     public void removeAllCourse() {
@@ -206,6 +217,14 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = AttendanceContract.LessonTable.COLUMN_NAME_LID + "=" + id;
         db.delete(AttendanceContract.LessonTable.TABLE_NAME, where, null);
+    }
+
+    public void deleteAllCourseLessons(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.LessonTable.COLUMN_NAME_ClassName + "=?" + " AND "+
+                AttendanceContract.LessonTable.COLUMN_NAME_ClassSection + "=?";
+        String[] args = {c.getName(),c.getSection()};
+        db.delete(AttendanceContract.LessonTable.TABLE_NAME, where, args);
     }
 
     public void removeAllLessons() {
@@ -311,6 +330,29 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_SID + "=" + id;
         db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, null);
+    }
+
+    public void addMultipleStudentAttendanceEntry(Lesson l){
+
+        ArrayList<Student> students = retrieveClassRoster(l.getCourse());
+
+        for(Student s: students){
+            addStudentAttendanceEntry(s,l);
+        }
+
+    }
+
+    public void addStudentAttendanceEntry(Student s, Lesson l){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // loading getting values from lesson object
+        ContentValues values = new ContentValues();
+        values.put(AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID, l.getLid());
+        values.put(AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID,s.getId());
+        values.put(AttendanceContract.AttendanceEntryTable.COLUMN_NAME_PAXT, "Absent");
+
+        // inserting class lesson database
+        db.insert(AttendanceContract.AttendanceEntryTable.TABLE_NAME, null, values);
     }
 
 }

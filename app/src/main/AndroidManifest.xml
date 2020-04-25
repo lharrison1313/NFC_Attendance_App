@@ -32,5 +32,8 @@
         <activity android:name=".ClassInfoActivity">
 
         </activity>
+        <activity android:name=".LessonInfoActivity">
+
+        </activity>
     </application>
 </manifest>

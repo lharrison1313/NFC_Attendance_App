@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFrag = null;
                     switch (item.getItemId()){
                         case R.id.nav_sheets:
-                            selectedFrag = new SheetsFragment();
+                            selectedFrag = new LessonFragment();
                             break;
                         case R.id.nav_classes:
                             selectedFrag = new ClasssesFragment();

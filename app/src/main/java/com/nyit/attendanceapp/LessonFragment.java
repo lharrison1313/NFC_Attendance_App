@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class SheetsFragment extends Fragment{
+public class LessonFragment extends Fragment{
 
     FloatingActionButton fab;
     LessonListAdapter adapter;

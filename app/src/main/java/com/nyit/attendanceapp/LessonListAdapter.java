@@ -74,7 +74,18 @@ public class LessonListAdapter<mContext> extends BaseAdapter {
         datetime.setText(String.format("%s %s", date, time));
 
         //setting onclick listener
-
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LessonInfoActivity.class);
+                intent.putExtra("class_name",mLessonList.get(position).getCourse().getName());
+                intent.putExtra("class_section",mLessonList.get(position).getCourse().getSection());
+                intent.putExtra("date",mLessonList.get(position).getDate());
+                intent.putExtra("time",mLessonList.get(position).getTime());
+                intent.putExtra("id",mLessonList.get(position).getLid());
+                mContext.startActivity(intent);
+            }
+        });
 
         return listItem;
 
