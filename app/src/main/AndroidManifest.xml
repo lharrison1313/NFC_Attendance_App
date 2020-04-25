@@ -23,7 +23,7 @@
         <activity android:name=".AddCourseActivity">
 
         </activity>
-        <activity android:name=".AddSheetActivity">
+        <activity android:name=".AddLessonActivity">
 
         </activity>
         <activity android:name=".StudentInfoActivity">

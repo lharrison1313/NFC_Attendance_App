@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 
 import java.util.ArrayList;
 
-public class AddSheetActivity extends Activity {
+public class AddLessonActivity extends Activity {
 
     private AttendanceDbHelper db;
     private AppCompatSpinner spinner;
@@ -131,6 +131,7 @@ public class AddSheetActivity extends Activity {
                 if(date != null && time != null && spinner.getSelectedItem() != null) {
                     Lesson l = new Lesson(date, time, (Course) spinner.getSelectedItem());
                     db.addLesson(l);
+                    db.addMultipleStudentAttendanceEntry(db.retrieveSingleLesson(l));
                     finish();
                 }
                 else{

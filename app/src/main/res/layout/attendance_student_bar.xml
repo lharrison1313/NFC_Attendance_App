@@ -3,6 +3,7 @@
     android:layout_width="match_parent" android:layout_height="100dp"
     android:padding="5dp"
     >
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,7 +11,7 @@
         android:id="@+id/student_info_container"
         >
         <TextView
-            android:id="@+id/studentName"
+            android:id="@+id/studentNameAttendance"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,131 +22,66 @@
             />
 
         <TextView
-            android:id="@+id/studentId"
+            android:id="@+id/studentIdAttendance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID"
             android:textSize="20dp"
-            android:layout_below="@+id/studentName"
+            android:layout_below="@+id/studentNameAttendance"
             android:layout_marginVertical="5dp"
             />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/button_container"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:text="Present Absent Tardy Excused"
+        android:layout_above="@id/radio_group"
+        android:layout_toRightOf="@id/student_info_container"
+        android:layout_marginLeft="24dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_toRightOf="@id/student_info_container"
         android:layout_centerVertical="true"
-        android:layout_marginHorizontal="10dp"
-    >
-        <RelativeLayout
+        android:layout_marginLeft="20dp"
+        >
+
+        <RadioButton
+            android:id="@+id/Present"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/absent_container"
-            android:layout_marginHorizontal="3dp"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            />
 
-            <TextView
-                android:id="@+id/absent_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Absent"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/absent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/absent_text"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <RadioButton
+            android:id="@+id/Absent"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/present_container"
-            android:layout_toRightOf="@id/absent_container"
-            android:layout_marginHorizontal="3dp"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            />
 
-            <TextView
-                android:id="@+id/present_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Present"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/present"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/present_text"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <RadioButton
+            android:id="@+id/Tardy"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/tardy_container"
-            android:layout_toRightOf="@id/present_container"
-            android:layout_marginHorizontal="3dp"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            />
 
-            <TextView
-                android:id="@+id/tardy_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tardy"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/tardy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/tardy_text"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <RadioButton
+            android:id="@+id/Excused"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/excused_container"
-            android:layout_toRightOf="@id/tardy_container"
-            android:layout_marginHorizontal="3dp"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            />
+    </RadioGroup>
 
-            <TextView
-                android:id="@+id/excused_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Excused"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/excused"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/excused_text"
-                />
-        </RelativeLayout>
 
-    </RelativeLayout>
+
 
 </RelativeLayout>

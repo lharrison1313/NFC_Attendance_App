@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -72,6 +72,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_CLASS);
         db.execSQL(SQL_CREATE_LESSON);
         db.execSQL(SQL_CREATE_ROSTER_ENTRY);
+        db.execSQL(SQL_CREATE_ATTENDANCE_ENTRY);
     }
 
     @Override
@@ -80,6 +81,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_CLASS);
         db.execSQL(SQL_DELETE_LESSON);
         db.execSQL(SQL_DELETE_ROSTER_ENTRY);
+        db.execSQL(SQL_DELETE_ATTENDANCE_ENTRY);
         onCreate(db);
     }
 
@@ -211,6 +213,28 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // inserting class lesson database
         db.insert(AttendanceContract.LessonTable.TABLE_NAME, null, values);
+    }
+
+    public Lesson retrieveSingleLesson(Lesson l){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT * FROM %s WHERE %s=? AND %s=? AND %s=? AND %s=?",
+                AttendanceContract.LessonTable.TABLE_NAME, AttendanceContract.LessonTable.COLUMN_NAME_ClassName,
+                AttendanceContract.LessonTable.COLUMN_NAME_ClassSection, AttendanceContract.LessonTable.COLUMN_NAME_DATE,
+                AttendanceContract.LessonTable.COLUMN_NAME_TIME);
+
+        String[] args = {l.getCourse().getName(), l.getCourse().getSection(), l.getDate(), l.getTime()};
+
+        Cursor c = db.rawQuery(query,args);
+        c.moveToNext();
+
+        String className = c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_ClassName));
+        String classSection = c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_ClassSection));
+        int lid = c.getInt(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_LID));
+        String date= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_DATE));
+        String time= c.getString(c.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_TIME));
+        Course course = new Course(className,classSection);
+
+        return new Lesson(date,time,course,lid);
     }
 
     public void deleteLesson(int id) {
@@ -353,6 +377,49 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // inserting class lesson database
         db.insert(AttendanceContract.AttendanceEntryTable.TABLE_NAME, null, values);
+    }
+
+    public ArrayList<Attendance> retrieveAllAttendance(int lid){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format("SELECT * FROM %s s INNER JOIN %s a ON s.%s=a.%s WHERE a.%s=?",
+                AttendanceContract.StudentTable.TABLE_NAME,AttendanceContract.AttendanceEntryTable.TABLE_NAME,
+                AttendanceContract.StudentTable.COLUM_NAME_SID, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID,
+                AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID);
+
+        String[] args = {Integer.toString(lid)};
+
+        Cursor c = db.rawQuery(query,args);
+        ArrayList<Attendance> attendanceList = new ArrayList<>();
+        while(c.moveToNext()){
+            String name = c.getString(c.getColumnIndex(AttendanceContract.StudentTable.COLUMN_NAME_SNAME));
+            String sid =  c.getString(c.getColumnIndex(AttendanceContract.StudentTable.COLUM_NAME_SID));
+            String paxt = c.getString(c.getColumnIndex(AttendanceContract.AttendanceEntryTable.COLUMN_NAME_PAXT));
+
+            Student s = new Student(name,sid);
+            attendanceList.add(new Attendance(s,lid,paxt));
+        }
+        c.close();
+        return attendanceList;
+    }
+
+    public void updateAttendance(String sid, int lid, String paxt){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // loading getting values from lesson object
+        ContentValues values = new ContentValues();
+        values.put(AttendanceContract.AttendanceEntryTable.COLUMN_NAME_PAXT, paxt);
+
+        String where = String.format("%s=? AND %s=?",
+                AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID);
+
+        String[] args = {sid,Integer.toString(lid)};
+
+
+        // inserting class lesson database
+        db.update(AttendanceContract.AttendanceEntryTable.TABLE_NAME,values,where,args);
+
+
     }
 
 }

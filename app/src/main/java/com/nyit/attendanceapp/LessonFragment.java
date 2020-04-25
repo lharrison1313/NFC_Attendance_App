@@ -39,7 +39,7 @@ public class LessonFragment extends Fragment{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent (getActivity(), AddSheetActivity.class);
+                Intent intent =  new Intent (getActivity(), AddLessonActivity.class);
                 getActivity().startActivity(intent);
             }
         });

@@ -3,6 +3,7 @@ package com.nyit.attendanceapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.AppCompatButton;
 public class LessonInfoActivity extends Activity {
 
     private String name, section, date, time;
+    private AttendanceListAdapter adapter;
     private int id;
 
     @Override
@@ -19,6 +21,7 @@ public class LessonInfoActivity extends Activity {
         setContentView(R.layout.sheet_info);
         configureBackButton();
         configureLessonHeader();
+        configureAttendanceList();
     }
 
 
@@ -30,6 +33,12 @@ public class LessonInfoActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.populateAttendanceList();
     }
 
     private void configureLessonHeader(){
@@ -50,4 +59,13 @@ public class LessonInfoActivity extends Activity {
         classSection.setText(section);
 
     }
+
+    private void configureAttendanceList(){
+        ListView lv = findViewById(R.id.SheetInfoStudentList);
+        adapter = new AttendanceListAdapter(this,id);
+        lv.setAdapter(adapter);
+    }
+
+
+
 }

@@ -56,7 +56,7 @@ public class DeleteableStudentListAdapter extends BaseAdapter {
 
         //creating delete dialog
         AlertDialog.Builder builder1 = new AlertDialog.Builder(parent.getContext());
-        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this Class?");
+        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to remove this student from the class roster?");
         builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
