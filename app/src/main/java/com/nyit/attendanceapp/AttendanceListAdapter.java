@@ -21,6 +21,7 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<Attendance> mAttendanceList;
+    private ArrayList<Integer> patx;
     private int lid;
     private AttendanceDbHelper db;
 
@@ -30,7 +31,9 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
         this.mContext = m;
         this.lid = lid;
         db = new AttendanceDbHelper(mContext);
+        patx = new ArrayList<>();
         populateAttendanceList();
+
     }
 
     @Override
@@ -82,21 +85,6 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
         final RadioButton tardy = listItem.findViewById(R.id.Tardy);
         final RadioButton excused = listItem.findViewById(R.id.Excused);
 
-        switch(mAttendanceList.get(position).getPaxt()){
-            case "Absent":
-                absent.setChecked(true);
-                break;
-            case "Present":
-                present.setChecked(true);
-                break;
-            case "Tardy":
-                tardy.setChecked(true);
-                break;
-            case "Excused":
-                excused.setChecked(true);
-                break;
-        }
-
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -104,15 +92,19 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
                 String paxt;
                 if(checkedId == absent.getId()){
                     paxt = "Absent";
+                    patx.set(position,2);
                 }
                 else if(checkedId == present.getId()){
                     paxt = "Present";
+                    patx.set(position,1);
                 }
                 else if(checkedId == tardy.getId()){
                     paxt = "Tardy";
+                    patx.set(position,3);
                 }
                 else{
                     paxt = "Excused";
+                    patx.set(position,4);
                 }
 
                 String sid = mAttendanceList.get(position).getStudent().getId();
@@ -120,6 +112,21 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
                 db.updateAttendance(sid,lid,paxt);
             }
         });
+
+        switch(patx.get(position)){
+            case 2:
+                absent.setChecked(true);
+                break;
+            case 1:
+                present.setChecked(true);
+                break;
+            case 3:
+                tardy.setChecked(true);
+                break;
+            case 4:
+                excused.setChecked(true);
+                break;
+        }
 
 
 
@@ -131,6 +138,23 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
     public void populateAttendanceList(){
         mAttendanceList = db.retrieveAllAttendance(lid);
         this.notifyDataSetChanged();
+        patx.clear();
+        for(Attendance a: mAttendanceList){
+            switch(a.getPaxt()){
+                case "Absent":
+                    patx.add(2);
+                    break;
+                case "Present":
+                    patx.add(1);
+                    break;
+                case "Tardy":
+                    patx.add(3);
+                    break;
+                case "Excused":
+                    patx.add(4);
+                    break;
+            }
+        }
     }
 
     public boolean setPresent(String sid){

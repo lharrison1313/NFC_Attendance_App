@@ -15,13 +15,16 @@ public class SelectableStudentListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Student> mStudentList;
     private ArrayList<Student> selectedStudents;
+    private ArrayList<Boolean> checked;
     private AttendanceDbHelper db;
 
     SelectableStudentListAdapter(Context mContext){
         this.mContext = mContext;
         db = new AttendanceDbHelper(mContext);
         selectedStudents = new ArrayList<>();
+        checked = new ArrayList<>();
         populateStudentList();
+
     }
 
     @Override
@@ -52,7 +55,9 @@ public class SelectableStudentListAdapter extends BaseAdapter {
         id.setText(mStudentList.get(position).getId());
 
         //creating checkbox object and listener
-        AppCompatCheckBox check = listItem.findViewById(R.id.studentSelect);
+        final AppCompatCheckBox check = listItem.findViewById(R.id.studentSelect);
+
+
 
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -60,19 +65,29 @@ public class SelectableStudentListAdapter extends BaseAdapter {
                 //when box is checked it will add student to selected list
                 if(isChecked){
                     selectedStudents.add(mStudentList.get(position));
+                    checked.set(position,true);
                 }
                 //when unchecked they are removed
                 else{
                     selectedStudents.remove(mStudentList.get(position));
+                    checked.set(position,false);
                 }
             }
         });
+
+        check.setChecked(checked.get(position));
+
+
 
         return listItem;
     }
 
     public void populateStudentList(){
         mStudentList = db.retrieveAllStudents();
+        checked.clear();
+        for(int x = 0; x<mStudentList.size(); x++){
+            checked.add(false);
+        }
         this.notifyDataSetChanged();
     }
 
