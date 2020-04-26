@@ -32,13 +32,21 @@
             />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dp"
+        >
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Present Absent Tardy Excused"
         android:layout_above="@id/radio_group"
-        android:layout_toRightOf="@id/student_info_container"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="23dp"
         />
 
     <RadioGroup
@@ -46,7 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_toRightOf="@id/student_info_container"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         >
@@ -80,7 +87,7 @@
             />
     </RadioGroup>
 
-
+    </RelativeLayout>
 
 
 

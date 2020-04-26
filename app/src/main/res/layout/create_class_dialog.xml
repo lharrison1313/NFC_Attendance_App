@@ -25,7 +25,6 @@
         android:id="@+id/studentRoster"
         android:layout_below="@id/sectionField"
         android:layout_above="@id/cancelClass"
-        android:background="@color/grey"
         >
 
         <SearchView

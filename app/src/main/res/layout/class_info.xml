@@ -51,7 +51,6 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_delete_black_24dp"
         android:background="@color/red"
-        android:layout_alignParentRight="true"
         android:layout_margin="10dp"
         />
 
@@ -61,6 +60,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
         android:text="done"
         />
 

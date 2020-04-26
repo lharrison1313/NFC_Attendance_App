@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Section"
             android:textSize="20dp"
-            android:layout_below="@id/SheetBarDate"
+            android:layout_below="@id/SheetBarClassName"
             />
         <TextView
             android:id="@+id/SheetBarDate"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Date"
             android:textSize="20dp"
-            android:layout_below="@id/SheetBarClassName"
+            android:layout_below="@id/SheetBarSection"
         />
     </RelativeLayout>
 </RelativeLayout>

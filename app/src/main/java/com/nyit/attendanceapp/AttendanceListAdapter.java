@@ -133,4 +133,15 @@ public class AttendanceListAdapter<mContext> extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
+    public boolean setPresent(String sid){
+        for(Attendance a: mAttendanceList){
+            if(a.getStudent().getId().equals(sid)){
+                db.updateAttendance(sid,lid,"Present");
+                populateAttendanceList();
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

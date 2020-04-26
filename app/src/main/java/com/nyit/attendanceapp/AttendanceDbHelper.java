@@ -101,7 +101,9 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = AttendanceContract.StudentTable.COLUM_NAME_SID + "=" + id;
         db.delete(AttendanceContract.StudentTable.TABLE_NAME, where, null);
+        deleteStudentFromAllAttendanceEntries(id);
         deleteStudentFromAllRosters(id);
+
     }
 
     public void removeAllStudents() {
@@ -147,10 +149,13 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
                 AttendanceContract.Course.COLUMN_NAME_SECTION + "=?" ;
         String[] args = {c.getName(),c.getSection()};
         db.delete(AttendanceContract.Course.TABLE_NAME, where,args );
+        //deleting all attendance entries for that course
+        deleteAllAttendanceEntriesForCourse(c);
+        //deleting all lessons along for that course
+        deleteAllCourseLessons(c);
         //deleting roster along with course
         deleteEntireRoster(c);
-        //deleting all lessons along with course
-        deleteAllCourseLessons(c);
+
     }
 
     public void removeAllCourse() {
@@ -241,6 +246,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = AttendanceContract.LessonTable.COLUMN_NAME_LID + "=" + id;
         db.delete(AttendanceContract.LessonTable.TABLE_NAME, where, null);
+        deleteAllLessonAttendanceEntries(id);
     }
 
     public void deleteAllCourseLessons(Course c){
@@ -418,8 +424,28 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // inserting class lesson database
         db.update(AttendanceContract.AttendanceEntryTable.TABLE_NAME,values,where,args);
+    }
 
+    public void deleteAllLessonAttendanceEntries(int lid){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID+ "=" + lid;
+        db.delete(AttendanceContract.AttendanceEntryTable.TABLE_NAME, where, null);
+    }
 
+    public void deleteStudentFromAllAttendanceEntries(String sid){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID+ "=" + sid;
+        db.delete(AttendanceContract.AttendanceEntryTable.TABLE_NAME, where, null);
+    }
+
+    public void deleteAllAttendanceEntriesForCourse(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = String.format("DELETE FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s=? AND %s=?)",
+                AttendanceContract.AttendanceEntryTable.TABLE_NAME, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID,
+                AttendanceContract.LessonTable.COLUMN_NAME_LID, AttendanceContract.LessonTable.TABLE_NAME,
+                AttendanceContract.LessonTable.COLUMN_NAME_ClassName, AttendanceContract.LessonTable.COLUMN_NAME_ClassSection);
+        String[] args = {c.getName(),c.getSection()};
+        db.rawQuery(query,args);
     }
 
 }
