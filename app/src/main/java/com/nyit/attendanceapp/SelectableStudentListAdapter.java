@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.AppCompatCheckBox;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +74,12 @@ public class SelectableStudentListAdapter extends BaseAdapter {
     public void populateStudentList(){
         mStudentList = db.retrieveAllStudents();
         this.notifyDataSetChanged();
+    }
+
+    public void removeStudentsFromList(ArrayList<Student> students){
+        for(Student s: students){
+            mStudentList.remove(s);
+        }
     }
 
     public ArrayList<Student> getSelectedStudents(){

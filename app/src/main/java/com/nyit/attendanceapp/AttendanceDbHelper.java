@@ -424,6 +424,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
         // inserting class lesson database
         db.update(AttendanceContract.AttendanceEntryTable.TABLE_NAME,values,where,args);
+        db.close();
     }
 
     public void deleteAllLessonAttendanceEntries(int lid){

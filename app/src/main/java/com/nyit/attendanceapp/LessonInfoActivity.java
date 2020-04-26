@@ -65,7 +65,14 @@ public class LessonInfoActivity extends Activity {
 
         Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         Student s = tagReaderWriter.readTag(tagFromIntent);
-        tapDialog(s);
+        if(s != null){
+            tapDialog(s);
+        }
+        else{
+            Toast toast = Toast.makeText(this,"Invalid Tag: Tag may be empty or improperly formatted.",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
 
     }
 

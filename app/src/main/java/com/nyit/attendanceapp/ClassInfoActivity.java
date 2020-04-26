@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ public class ClassInfoActivity extends Activity {
         configureStudentList();
         configureDeleteDialog();
         configureDeleteButton();
+        configureAddStudentButton();
 
 
     }
@@ -98,6 +100,20 @@ public class ClassInfoActivity extends Activity {
             }
         });
         deleteDialog = builder1.create();
+    }
+
+    private void configureAddStudentButton(){
+        AppCompatButton acb = findViewById(R.id.addStudentButton);
+        final Intent i = new Intent(this, AddStudentsToCourseActivity.class);
+        acb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i.putExtra("student_list",adapter.getStudentList());
+                i.putExtra("name",name);
+                i.putExtra("section",section);
+                startActivity(i);
+            }
+        });
     }
 
 

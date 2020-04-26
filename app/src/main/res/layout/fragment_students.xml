@@ -5,19 +5,13 @@
     android:layout_height="match_parent"
     >
 
-    <SearchView
-        android:id="@+id/studentSearch"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:hint="Search Students"
-        android:iconifiedByDefault="false"
-        />
+
 
     <ListView
         android:id="@+id/studentList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/studentSearch"/>
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonStudents"

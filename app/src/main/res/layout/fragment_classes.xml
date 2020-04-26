@@ -17,17 +17,9 @@
         android:layout_marginRight="20sp"
         />
 
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/classSearch"
-        android:iconifiedByDefault="false"
-        />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/classSearch"
         android:id="@+id/classList"
         />
 

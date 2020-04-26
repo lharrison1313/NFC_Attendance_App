@@ -37,9 +37,16 @@
         android:id="@+id/SheetInfoStudentList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/sheetDeleteButton"
+        android:layout_above="@+id/exportButton"
         android:layout_marginVertical="5dp"
         android:layout_below="@id/SheetInfoHeader"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exportButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/sheetDoneButton"
+        android:text="Export Attendance Sheet"
         />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sheetDoneButton"

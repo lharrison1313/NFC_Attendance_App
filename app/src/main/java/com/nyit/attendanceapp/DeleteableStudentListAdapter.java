@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteableStudentListAdapter extends BaseAdapter {
@@ -89,6 +90,10 @@ public class DeleteableStudentListAdapter extends BaseAdapter {
     public void populateStudentList(){
         mStudentList = db.retrieveClassRoster(course);
         this.notifyDataSetChanged();
+    }
+
+    public ArrayList<Student> getStudentList(){
+        return  (ArrayList<Student>) mStudentList;
     }
 
 
