@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
@@ -19,6 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 public class LessonInfoActivity extends Activity {
 
@@ -43,7 +50,9 @@ public class LessonInfoActivity extends Activity {
         configureAttendanceList();
         configureDeleteDialog();
         configureDeleteButton();
+        configureExportButton();
         configureForegroundNFCDispatch();
+
     }
 
 
@@ -192,6 +201,46 @@ public class LessonInfoActivity extends Activity {
         techListsArray = new String[][] { new String[] { Ndef.class.getName() } };
     }
 
+    private void configureExportButton(){
+        AppCompatButton acb = findViewById(R.id.exportButton);
+        acb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportAttendanceSheet();
+            }
+        });
+    }
 
+    private void exportAttendanceSheet(){
+        String fileName = String.format("%s_%s.csv",name,section);
+        StringBuilder sb = new StringBuilder();
+        ArrayList<Attendance> aList = db.retrieveAllAttendance(id);
+        sb.append("Student,SID,Status");
+        for(Attendance a: aList){
+            sb.append(String.format("\n%s,%s,%s",a.getStudent().getName(),a.getStudent().getId(),a.getPaxt()));
+        }
+
+        try{
+            //saving file
+            FileOutputStream out = openFileOutput(fileName, Context.MODE_PRIVATE);
+            out.write(sb.toString().getBytes());
+            out.close();
+
+            //exporting file
+            Context context = getApplicationContext();
+            File file = new File(getFilesDir(),fileName);
+            Uri path = FileProvider.getUriForFile(context,"com.nyit.attendanceapp.fileprovider",file);
+            Intent fileIntent = new Intent(Intent.ACTION_SEND);
+            fileIntent.setType("text/csv");
+            fileIntent.putExtra(Intent.EXTRA_SUBJECT,"Attendance Sheet");
+            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            fileIntent.putExtra(Intent.EXTRA_STREAM,path);
+            startActivity(fileIntent);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
 
 }
