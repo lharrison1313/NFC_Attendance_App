@@ -56,7 +56,7 @@ public class AddLessonActivity extends Activity {
         dateDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                date = String.format("%d/%d/%d", month, dayOfMonth, year);
+                date = String.format("%d/%d/%d", month+1, dayOfMonth, year);
                 dateButton.setText(date);
             }
         });

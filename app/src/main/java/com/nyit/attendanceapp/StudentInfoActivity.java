@@ -11,7 +11,6 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,15 +32,18 @@ public class StudentInfoActivity extends Activity {
     private AlertDialog nfcDialog;
     private AlertDialog writeCompleteDialog;
     private boolean writeToNFC;
+    private AttendanceDbHelper db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_info);
+        db = new AttendanceDbHelper(this);
         configureDeleteDialog();
         configureDeleteStudentButton();
         configureBackButton();
         configureStudentHeader();
+        configureStatusMetrics();
         configureNFCButton();
         configureNFCDialog();
         configureForegroundNFCDispatch();
@@ -182,5 +184,20 @@ public class StudentInfoActivity extends Activity {
     private void deleteStudent(){
         AttendanceDbHelper db = new AttendanceDbHelper(this);
         db.deleteStudent(id);
+    }
+
+    private void configureStatusMetrics(){
+        int[] status = db.getAttendanceStatusCounts(new Student(name,id));
+        TextView presents = findViewById(R.id.infoPresents);
+        TextView absences = findViewById(R.id.infoAbsences);
+        TextView excused = findViewById(R.id.infoExcused);
+        TextView tardies = findViewById(R.id.infoTardies);
+
+        presents.setText("Presents: " + status[0]);
+        absences.setText("Absences: " + status[1]);
+        excused.setText("Excused: " + status[2]);
+        tardies.setText("Tardies: " + status[3]);
+
+
     }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -40,11 +40,9 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
             AttendanceContract.LessonTable.TABLE_NAME);
 
     private static final String SQL_CREATE_ROSTER_ENTRY = String.format(
-            "Create Table %s (%s TEXT, %s TEXT, %s TEXT, %s INTEGER, %s INTEGER, %s INTEGER, %s INTEGER, PRIMARY KEY(%s, %s, %s))",
+            "Create Table %s (%s TEXT, %s TEXT, %s TEXT, PRIMARY KEY(%s, %s, %s))",
             AttendanceContract.RosterEntryTable.TABLE_NAME, AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassName,
             AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassSection, AttendanceContract.RosterEntryTable.COLUMN_NAME_SID,
-            AttendanceContract.RosterEntryTable.COLUMN_NAME_PRESENT, AttendanceContract.RosterEntryTable.COLUMN_NAME_ABSENT,
-            AttendanceContract.RosterEntryTable.COLUMN_NAME_EXCUSED, AttendanceContract.RosterEntryTable.COLUMN_NAME_TARDY,
             AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassName, AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassSection,
             AttendanceContract.RosterEntryTable.COLUMN_NAME_SID);
 
@@ -301,11 +299,6 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_SID,sid);
         values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassName,c.getName());
         values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_ClassSection,c.getSection());
-        values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_ABSENT,0);
-        values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_EXCUSED,0);
-        values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_PRESENT,0);
-        values.put(AttendanceContract.RosterEntryTable.COLUMN_NAME_TARDY,0);
-
 
         // inserting class lesson database
         db.insert(AttendanceContract.RosterEntryTable.TABLE_NAME, null, values);
@@ -448,5 +441,38 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         String[] args = {c.getName(),c.getSection()};
         db.rawQuery(query,args);
     }
+
+    public int[] getAttendanceStatusCounts(Student s){
+
+        int[] results = new int[4];
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",
+                AttendanceContract.AttendanceEntryTable.TABLE_NAME, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID,
+                AttendanceContract.AttendanceEntryTable.COLUMN_NAME_PAXT);
+        String[] args1 = {s.getId(),"Present"};
+        String[] args2 = {s.getId(),"Absent"};
+        String[] args3 = {s.getId(),"Excused"};
+        String[] args4 = {s.getId(),"Tardy"};
+
+        Cursor c1 = db.rawQuery(query,args1);
+        Cursor c2 = db.rawQuery(query,args2);
+        Cursor c3 = db.rawQuery(query,args3);
+        Cursor c4 = db.rawQuery(query,args4);
+        c1.moveToNext();
+        c2.moveToNext();
+        c3.moveToNext();
+        c4.moveToNext();
+
+        results[0] = c1.getCount();
+        results[1] = c2.getCount();
+        results[2] = c3.getCount();
+        results[3] = c4.getCount();
+
+        return results;
+
+    }
+
+
 
 }

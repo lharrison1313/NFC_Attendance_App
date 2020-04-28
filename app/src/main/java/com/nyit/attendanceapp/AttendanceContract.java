@@ -45,10 +45,6 @@ public class AttendanceContract {
         public static final String COLUMN_NAME_ClassName = "ClassName";
         public static final String COLUMN_NAME_ClassSection = "ClassSection";
         public static final String COLUMN_NAME_SID = "SID";
-        public static final String COLUMN_NAME_PRESENT = "Present";
-        public static final String COLUMN_NAME_ABSENT = "Absent";
-        public static final String COLUMN_NAME_EXCUSED = "Excused";
-        public static final String COLUMN_NAME_TARDY = "Tardy";
     }
 
 }
