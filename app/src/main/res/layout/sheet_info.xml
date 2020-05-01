@@ -33,14 +33,43 @@
             android:layout_below="@id/SheetInfoClassName"
             />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/safeSignInText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Safe NFC Sign In"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_below="@id/SheetInfoHeader"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="2dp"
+        />
+    <Switch
+        android:id="@+id/safeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="3dp"
+        android:layout_below="@id/SheetInfoHeader"
+        android:layout_marginHorizontal="60dp"
+        android:layout_alignParentRight="true"
+        />
+
     <ListView
         android:id="@+id/SheetInfoStudentList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/exportButton"
+        android:layout_below="@id/safeSignInText"
+        android:layout_above="@id/exportButton"
         android:layout_marginVertical="5dp"
-        android:layout_below="@id/SheetInfoHeader"
         />
+
+<!--    <ListView-->
+<!--        android:id="@+id/SheetInfoStudentList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/SheetInfoHeader"-->
+<!--        android:layout_above="@id/exportButton"-->
+<!--        />-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exportButton"
         android:layout_width="match_parent"

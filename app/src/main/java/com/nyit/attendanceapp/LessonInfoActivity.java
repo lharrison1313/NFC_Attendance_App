@@ -15,6 +15,7 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +40,14 @@ public class LessonInfoActivity extends Activity {
     private PendingIntent pendingIntent;
     private TagReaderWriter tagReaderWriter;
     private NfcAdapter nfcadapter;
+    private Switch safeSignIn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sheet_info);
         db = new AttendanceDbHelper(this);
+        configureSafeSignIn();
         configureBackButton();
         configureLessonHeader();
         configureAttendanceList();
@@ -59,14 +62,18 @@ public class LessonInfoActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        nfcadapter.disableForegroundDispatch(this);
+        if(nfcadapter != null) {
+            nfcadapter.disableForegroundDispatch(this);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         adapter.populateAttendanceList();
-        nfcadapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
+        if(nfcadapter != null) {
+            nfcadapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
+        }
     }
 
     @Override
@@ -74,8 +81,17 @@ public class LessonInfoActivity extends Activity {
 
         Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         Student s = tagReaderWriter.readTag(tagFromIntent);
-        if(s != null){
+        if(s != null && safeSignIn.isChecked()){
             tapDialog(s);
+        }
+        else if(s != null && !safeSignIn.isChecked()){
+            if(adapter.setPresent(s.getId())){
+                showConfirmToast(s);
+            }
+            else{
+                showErrorToast(s);
+            }
+
         }
         else{
             Toast toast = Toast.makeText(this,"Invalid Tag: Tag may be empty or improperly formatted.",Toast.LENGTH_SHORT);
@@ -83,6 +99,11 @@ public class LessonInfoActivity extends Activity {
         }
 
 
+    }
+
+    private void configureSafeSignIn(){
+        safeSignIn = findViewById(R.id.safeSwitch);
+        safeSignIn.setChecked(true);
     }
 
     private void tapDialog(final Student s){
@@ -111,7 +132,12 @@ public class LessonInfoActivity extends Activity {
     }
 
     public void showErrorToast(Student s){
-        Toast toast = Toast.makeText(this,"That student is not in this class",Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this,String.format("Student %s is not in this class",s.getName()),Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void showConfirmToast(Student s){
+        Toast toast = Toast.makeText(this,String.format("Student %s was signed in",s.getName()),Toast.LENGTH_SHORT);
         toast.show();
     }
 

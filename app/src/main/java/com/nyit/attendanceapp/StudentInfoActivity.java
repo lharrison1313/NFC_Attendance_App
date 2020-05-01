@@ -52,12 +52,16 @@ public class StudentInfoActivity extends Activity {
 
     public void onPause() {
         super.onPause();
-        adapter.disableForegroundDispatch(this);
+        if(adapter != null) {
+            adapter.disableForegroundDispatch(this);
+        }
     }
 
     public void onResume() {
         super.onResume();
-        adapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
+        if(adapter != null) {
+            adapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
+        }
     }
 
     public void onNewIntent(Intent intent) {
