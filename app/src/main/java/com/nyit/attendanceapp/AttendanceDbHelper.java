@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 15;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -31,8 +31,10 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
             AttendanceContract.Course.TABLE_NAME);
 
     private static final String SQL_CREATE_LESSON = String.format(
-            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)",
+            "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, UNIQUE(%s,%s,%s,%s))",
             AttendanceContract.LessonTable.TABLE_NAME, AttendanceContract.LessonTable.COLUMN_NAME_LID,
+            AttendanceContract.LessonTable.COLUMN_NAME_ClassName, AttendanceContract.LessonTable.COLUMN_NAME_ClassSection,
+            AttendanceContract.LessonTable.COLUMN_NAME_DATE, AttendanceContract.LessonTable.COLUMN_NAME_TIME,
             AttendanceContract.LessonTable.COLUMN_NAME_ClassName, AttendanceContract.LessonTable.COLUMN_NAME_ClassSection,
             AttendanceContract.LessonTable.COLUMN_NAME_DATE, AttendanceContract.LessonTable.COLUMN_NAME_TIME);
 
@@ -204,7 +206,8 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     }
 
     // Lesson Table helpers
-    public void addLesson(Lesson l) {
+    public void addLesson(Lesson l){
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         // loading getting values from lesson object

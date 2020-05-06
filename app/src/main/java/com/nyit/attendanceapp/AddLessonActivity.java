@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -123,19 +124,21 @@ public class AddLessonActivity extends Activity {
     }
 
     private void configureDoneButton(){
-        final Toast t = Toast.makeText(this,"One or more fields are missing selections.",Toast.LENGTH_SHORT);
+        final Toast t1 = Toast.makeText(this,"One or more fields are missing selections.",Toast.LENGTH_SHORT);
+        final Toast t2 = Toast.makeText(this,"The selected Date, Time, Class combination is already used.",Toast.LENGTH_SHORT);
         AppCompatButton acb =  findViewById(R.id.lessonDone);
         acb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(date != null && time != null && spinner.getSelectedItem() != null) {
-                    Lesson l = new Lesson(date, time, (Course) spinner.getSelectedItem());
-                    db.addLesson(l);
-                    db.addMultipleStudentAttendanceEntry(db.retrieveSingleLesson(l));
-                    finish();
+                        Lesson l = new Lesson(date, time, (Course) spinner.getSelectedItem());
+                        db.addLesson(l);
+                        db.addMultipleStudentAttendanceEntry(db.retrieveSingleLesson(l));
+                        finish();
+
                 }
                 else{
-                    t.show();
+                    t1.show();
                 }
             }
         });
