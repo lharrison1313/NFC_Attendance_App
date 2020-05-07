@@ -7,8 +7,6 @@ public class Attendance {
    private String paxt;
 
 
-
-
     public Attendance(Student student, int lid, String paxt ){
         this.student = student;
         this.lid = lid;

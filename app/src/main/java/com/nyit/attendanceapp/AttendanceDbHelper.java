@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 15;
+    public static final int DATABASE_VERSION = 16;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -99,10 +99,11 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     }
     public void deleteStudent(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.StudentTable.COLUM_NAME_SID + "=" + id;
-        db.delete(AttendanceContract.StudentTable.TABLE_NAME, where, null);
-        deleteStudentFromAllAttendanceEntries(id);
+        String where = AttendanceContract.StudentTable.COLUM_NAME_SID + "=?";
+        String[] args = {id};
+        db.delete(AttendanceContract.StudentTable.TABLE_NAME, where, args);
         deleteStudentFromAllRosters(id);
+
 
     }
 
@@ -354,8 +355,9 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     public void deleteStudentFromAllRosters(String id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_SID + "=" + id;
-        db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, null);
+        String where = AttendanceContract.RosterEntryTable.COLUMN_NAME_SID + "=?";
+        String[] args = {id};
+        db.delete(AttendanceContract.RosterEntryTable.TABLE_NAME, where, args);
     }
 
     public void addMultipleStudentAttendanceEntry(Lesson l){
@@ -431,8 +433,9 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     public void deleteStudentFromAllAttendanceEntries(String sid){
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID+ "=" + sid;
-        db.delete(AttendanceContract.AttendanceEntryTable.TABLE_NAME, where, null);
+        String where = AttendanceContract.AttendanceEntryTable.COLUMN_NAME_SID+ "=?";
+        String[] args = {sid};
+        db.delete(AttendanceContract.AttendanceEntryTable.TABLE_NAME, where, args);
     }
 
     public void deleteAllAttendanceEntriesForCourse(Course c){
