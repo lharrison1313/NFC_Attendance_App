@@ -100,7 +100,7 @@ public class StudentInfoActivity extends Activity {
 
     private void configureDeleteDialog(){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student?");
+        builder1.setTitle("Confirm Delete").setMessage("Are you sure you want to delete this student? This will delete the student from all classes and attendance sheets.");
         builder1.setPositiveButton("confirm",new Dialog.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 16;
+    public static final int DATABASE_VERSION = 17;
     public static final String DATABASE_NAME = "Attendance.db";
 
     // SQL create and delete database commands
@@ -103,8 +103,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
         String[] args = {id};
         db.delete(AttendanceContract.StudentTable.TABLE_NAME, where, args);
         deleteStudentFromAllRosters(id);
-
-
+        deleteStudentFromAllAttendanceEntries(id);
     }
 
     public void removeAllStudents() {
@@ -439,13 +438,23 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
     }
 
     public void deleteAllAttendanceEntriesForCourse(Course c){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = String.format("DELETE FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s=? AND %s=?)",
-                AttendanceContract.AttendanceEntryTable.TABLE_NAME, AttendanceContract.AttendanceEntryTable.COLUMN_NAME_LID,
+
+        SQLiteDatabase db  = this.getReadableDatabase();
+        String query = String.format("SELECT %s FROM %s WHERE %s=? AND %s=?",
                 AttendanceContract.LessonTable.COLUMN_NAME_LID, AttendanceContract.LessonTable.TABLE_NAME,
                 AttendanceContract.LessonTable.COLUMN_NAME_ClassName, AttendanceContract.LessonTable.COLUMN_NAME_ClassSection);
         String[] args = {c.getName(),c.getSection()};
-        db.rawQuery(query,args);
+        Cursor cursor = db.rawQuery(query,args);
+        ArrayList<Integer> list = new ArrayList<>();
+        while(cursor.moveToNext()){
+           list.add(cursor.getInt(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_LID)));
+        }
+
+        for(int id: list){
+            deleteAllLessonAttendanceEntries(id);
+        }
+
+
     }
 
     public int[] getAttendanceStatusCounts(Student s){
