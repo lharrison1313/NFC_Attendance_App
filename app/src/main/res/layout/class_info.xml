@@ -40,9 +40,17 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Add Student"
-       android:layout_above="@id/infoDeleteClass"
+       android:layout_above="@id/exportAllAttendance"
         />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exportAllAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Export All Attendance Sheets"
+        android:layout_above="@id/infoDeleteClass"
+        />
+s
     
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="100dp"

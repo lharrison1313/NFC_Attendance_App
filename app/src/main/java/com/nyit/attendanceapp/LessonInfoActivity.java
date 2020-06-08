@@ -217,7 +217,7 @@ public class LessonInfoActivity extends Activity {
 
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
-            ndef.addDataType("*/*");    /* Handles all MIME based dispatches. */
+            ndef.addDataType("*/*");
         }
         catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
@@ -258,7 +258,7 @@ public class LessonInfoActivity extends Activity {
             Uri path = FileProvider.getUriForFile(context,"com.nyit.attendanceapp.fileprovider",file);
             Intent fileIntent = new Intent(Intent.ACTION_SEND);
             fileIntent.setType("text/csv");
-            fileIntent.putExtra(Intent.EXTRA_SUBJECT,"Attendance Sheet");
+            fileIntent.putExtra(Intent.EXTRA_SUBJECT,"Attendance Sheet: " + name + " " + date + " " + time);
             fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             fileIntent.putExtra(Intent.EXTRA_STREAM,path);
             startActivity(fileIntent);

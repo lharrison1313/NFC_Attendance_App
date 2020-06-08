@@ -488,6 +488,46 @@ public class AttendanceDbHelper extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<Lesson> retrieveAllLessonsForCourse(Course c){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                AttendanceContract.LessonTable.COLUMN_NAME_LID,
+                AttendanceContract.LessonTable.COLUMN_NAME_ClassName,
+                AttendanceContract.LessonTable.COLUMN_NAME_ClassSection,
+                AttendanceContract.LessonTable.COLUMN_NAME_DATE,
+                AttendanceContract.LessonTable.COLUMN_NAME_TIME,
+        };
+
+        String sorting = AttendanceContract.LessonTable.COLUMN_NAME_LID + " ASC";
+        String selection = String.format("%s=? AND %s=?",AttendanceContract.LessonTable.COLUMN_NAME_ClassName, AttendanceContract.LessonTable.COLUMN_NAME_ClassSection);
+        String[] args = {c.getName(),c.getSection()};
+        Cursor cursor = db.query(AttendanceContract.LessonTable.TABLE_NAME, projection, selection, args, null, null, sorting);
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        while (cursor.moveToNext()) {
+
+            String className = cursor.getString(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_ClassName));
+            String classSection = cursor.getString(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_ClassSection));
+            int lid = cursor.getInt(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_LID));
+            String date= cursor.getString(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_DATE));
+            String time= cursor.getString(cursor.getColumnIndex(AttendanceContract.LessonTable.COLUMN_NAME_TIME));
+            Course course = new Course(className,classSection);
+
+            lessons.add(new Lesson(date,time,course,lid));
+        }
+        cursor.close();
+        return lessons;
+    }
+
+    public ArrayList<AttendanceSheet> retrieveAllAttendanceSheets(Course c){
+        ArrayList<AttendanceSheet> sheets = new ArrayList<>();
+        ArrayList<Lesson> lessons = retrieveAllLessonsForCourse(c);
+        for(Lesson l : lessons){
+            sheets.add(new AttendanceSheet(retrieveAllAttendance(l.getLid()),c,l));
+        }
+        return sheets;
+    }
+
 
 
 }
